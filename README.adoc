@@ -10,4 +10,4 @@ Markus Dangl <663399+xicesky@users.noreply.github.com>
 https://code.visualstudio.com/docs/remote/containers#_quick-start-try-a-development-container[Visual Studio Code development container] for idris2 development
 
 * Built from the https://github.com/xicesky/idris2-devcontainer[Dockerfile here]
-* Image hosted on ...
+* Image hosted on https://github.com/xicesky/idris2-devcontainer/pkgs/container/idris2-devcontainer[ghrc]
