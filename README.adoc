@@ -1,0 +1,13 @@
+= idris2-devcontainer
+:source-highlighter: rouge
+:source-language: shell
+:icons: font
+:toc: left
+:sectanchors:
+:star: *
+Markus Dangl <663399+xicesky@users.noreply.github.com>
+
+https://code.visualstudio.com/docs/remote/containers#_quick-start-try-a-development-container[Visual Studio Code development container] for idris2 development
+
+* Built from the https://github.com/xicesky/idris2-devcontainer[Dockerfile here]
+* Image hosted on ...
