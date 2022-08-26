@@ -2,12 +2,20 @@
 :source-highlighter: rouge
 :source-language: shell
 :icons: font
-:toc: left
 :sectanchors:
 :star: *
 Markus Dangl <663399+xicesky@users.noreply.github.com>
 
-https://code.visualstudio.com/docs/remote/containers#_quick-start-try-a-development-container[Visual Studio Code development container] for idris2 development
+Containers for idris2 development
 
-* Built from the https://github.com/xicesky/idris2-devcontainer[Dockerfile here]
-* Image hosted on https://github.com/xicesky/idris2-devcontainer/pkgs/container/idris2-devcontainer[ghrc]
+* Built from the https://github.com/xicesky/idris2-devcontainer[Dockerfiles here]
+* Images hosted on https://github.com/xicesky?tab=packages&repo_name=idris2-devcontainer[github packages]
+
+== Published containers
+
+* `ghcr.io/xicesky/idris2-base:ubuntu-20.04`:
+    Base container for building idris2
+* `ghcr.io/xicesky/idris2:v0.5.1-ubuntu-20.04`:
+    Container with installed idris2
+* `ghcr.io/xicesky/idris2-devcontainer:v0.5.1-ubuntu-20.04`:
+    https://code.visualstudio.com/docs/remote/containers#_quick-start-try-a-development-container[Visual Studio Code Development Container] for idris2 development

@@ -6,18 +6,31 @@ name: Docker
 # documentation.
 
 on:
-  push:
-    #branches: [ "main" ]
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
+  # push:
+  #   #branches: [ "main" ]
+  #   # Publish semver tags as releases.
+  #   tags: [ 'v*.*.*' ]
   workflow_dispatch:
+    inputs:
+      UBUNTU_VERSION:
+        description: 'Ubuntu version, e.g.: 20.04'
+        required: true
+        type: string
+        default: '20.04'
+      IDRIS2_TAG:
+        description: 'Idris2 version (tag), e.g.: v0.5.1'
+        required: true
+        type: string
 
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
-  # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}
-
+  UBUNTU_VERSION: ${{ inputs.UBUNTU_VERSION }}
+  IDRIS2_TAG: ${{ inputs.IDRIS2_TAG }}
+  BASE_IMAGE: 'ubuntu:${{ inputs.UBUNTU_VERSION }}'
+  BASE: 'ubuntu-${{ inputs.UBUNTU_VERSION }}'
+  # github.repository_owner = The repository owner's name
+  IMAGE_NAME_PREFIX: ${{ github.repository_owner }}
 
 jobs:
   build:
@@ -42,7 +55,6 @@ jobs:
         with:
           cosign-release: 'v1.9.0'
 
-
       # Workaround: https://github.com/docker/build-push-action/issues/461
       - name: Setup Docker buildx
         uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
@@ -62,18 +74,48 @@ jobs:
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        # with:
+        #   images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
-      - name: Build and push Docker image
-        id: build-and-push
+      - name: Build and push Docker image idris2-base
+        id: build-and-push-idris2-base
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
-          context: .
+          context: idris2-base
+          build-args: |
+            BASE_IMAGE=${{ env.BASE_IMAGE }}
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ env.IMAGE_NAME_PREFIX }}/idris2-base:${{ env.BASE }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      # Build and push Docker image with Buildx (don't push on PR)
+      # https://github.com/docker/build-push-action
+      - name: Build and push Docker image idris2
+        id: build-and-push-idris2
+        uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
+        with:
+          context: idris2
+          build-args: |
+            BASE=${{ env.BASE }}
+            IDRIS2_TAG=${{ env.IDRIS2_TAG }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ env.IMAGE_NAME_PREFIX }}/idris2:${{ env.IDRIS2_TAG }}-${{ env.BASE }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      # Build and push Docker image with Buildx (don't push on PR)
+      # https://github.com/docker/build-push-action
+      - name: Build and push Docker image idris2-devcontainer
+        id: build-and-push-idris2-devcontainer
+        uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
+        with:
+          context: idris2-devcontainer
+          build-args: |
+            BASE=${{ env.BASE }}
+            IDRIS2_TAG=${{ env.IDRIS2_TAG }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ env.IMAGE_NAME_PREFIX }}/idris2-devcontainer:${{ env.IDRIS2_TAG }}-${{ env.BASE }}
           labels: ${{ steps.meta.outputs.labels }}
 
       # Sign the resulting Docker image digest except on PRs.
