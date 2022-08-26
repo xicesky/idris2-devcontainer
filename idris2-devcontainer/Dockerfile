@@ -21,3 +21,9 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     # ****************************************************************************
     && apt-get -y install --no-install-recommends asciidoctor \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
+
+LABEL org.opencontainers.image.title=idris2-devcontainer
+LABEL org.opencontainers.image.description=vscode devcontainer for idris2
+LABEL org.opencontainers.image.url=https://github.com/xicesky/idris2-devcontainer
+LABEL org.opencontainers.image.source https://github.com/xicesky/idris2-devcontainer
+LABEL org.opencontainers.image.licenses=MIT

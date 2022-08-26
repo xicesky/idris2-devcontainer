@@ -19,3 +19,9 @@ RUN make all
 RUN make install && make install-api
 
 # Yes we KEEP THE SOURCES in /usr/local/src for reference
+
+LABEL org.opencontainers.image.title=idris2
+LABEL org.opencontainers.image.description=idris2
+LABEL org.opencontainers.image.url=https://github.com/xicesky/idris2-devcontainer
+LABEL org.opencontainers.image.source https://github.com/xicesky/idris2-devcontainer
+LABEL org.opencontainers.image.licenses=MIT
