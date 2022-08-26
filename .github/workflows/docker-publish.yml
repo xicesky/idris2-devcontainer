@@ -21,6 +21,7 @@ on:
         description: 'Idris2 version (tag), e.g.: v0.5.1'
         required: true
         type: string
+        default: 'v0.5.1'
 
 env:
   # Use docker.io for Docker Hub if empty
