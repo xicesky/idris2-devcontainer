@@ -13,9 +13,9 @@ Containers for idris2 development
 
 == Published containers
 
-* `ghcr.io/xicesky/idris2-base:ubuntu-20.04`:
+* `ghcr.io/xicesky/idris2-base:ubuntu-22.04`:
     Base container for building idris2
-* `ghcr.io/xicesky/idris2:v0.5.1-ubuntu-20.04`:
+* `ghcr.io/xicesky/idris2:v0.6.0-ubuntu-22.04`:
     Container with installed idris2
-* `ghcr.io/xicesky/idris2-devcontainer:v0.5.1-ubuntu-20.04`:
+* `ghcr.io/xicesky/idris2-devcontainer:v0.6.0-ubuntu-22.04`:
     https://code.visualstudio.com/docs/remote/containers#_quick-start-try-a-development-container[Visual Studio Code Development Container] for idris2 development

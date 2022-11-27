@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1.4
 
-ARG BASE=ubuntu-20.04
-ARG IDRIS2_TAG=v0.5.1
+ARG BASE=ubuntu-22.04
+ARG IDRIS2_TAG=v0.6.0
 FROM ghcr.io/xicesky/idris2:${IDRIS2_TAG}-${BASE}
 
 # Prepare as devcontainer
@@ -24,6 +24,9 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     # ****************************************************************************
     && apt-get -y install --no-install-recommends asciidoctor \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
+
+# Fixups for common-debian.sh
+RUN chown -R "${USERNAME}:" "/home/${USERNAME}"
 
 LABEL org.opencontainers.image.title="idris2-devcontainer"
 LABEL org.opencontainers.image.description="vscode devcontainer for idris2"

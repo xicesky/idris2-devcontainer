@@ -13,15 +13,15 @@ on:
   workflow_dispatch:
     inputs:
       UBUNTU_VERSION:
-        description: 'Ubuntu version, e.g.: 20.04'
+        description: 'Ubuntu version, e.g.: 22.04'
         required: true
         type: string
-        default: '20.04'
+        default: '22.04'
       IDRIS2_TAG:
-        description: 'Idris2 version (tag), e.g.: v0.5.1'
+        description: 'Idris2 version (tag), e.g.: v0.6.0'
         required: true
         type: string
-        default: 'v0.5.1'
+        default: 'v0.6.0'
 
 env:
   # Use docker.io for Docker Hub if empty

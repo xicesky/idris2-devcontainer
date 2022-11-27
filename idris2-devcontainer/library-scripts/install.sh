@@ -6,19 +6,20 @@
 #
 # Docs: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/common.md
 # Maintainer: The VS Code and Codespaces Teams
-#
-# Syntax: ./common-debian.sh [install zsh flag] [username] [user UID] [user GID] [upgrade packages flag] [install Oh My Zsh! flag] [Add non-free packages]
 
 set -e
 
-INSTALL_ZSH=${1:-"true"}
-USERNAME=${2:-"automatic"}
-USER_UID=${3:-"automatic"}
-USER_GID=${4:-"automatic"}
-UPGRADE_PACKAGES=${5:-"true"}
-INSTALL_OH_MY_ZSH=${6:-"true"}
-ADD_NON_FREE_PACKAGES=${7:-"false"}
-SCRIPT_DIR="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)"
+# Clean up
+rm -rf /var/lib/apt/lists/*
+
+INSTALL_ZSH=${INSTALLZSH:-"true"}
+INSTALL_OH_MY_ZSH=${INSTALLOHMYZSH:-"true"}
+UPGRADE_PACKAGES=${UPGRADEPACKAGES:-"true"}
+USERNAME=${USERNAME:-"automatic"}
+USER_UID=${UID:-"automatic"}
+USER_GID=${GID:-"automatic"}
+ADD_NON_FREE_PACKAGES=${NONFREEPACKAGES:-"false"}
+
 MARKER_FILE="/usr/local/etc/vscode-dev-containers/common"
 
 if [ "$(id -u)" -ne 0 ]; then
@@ -65,8 +66,6 @@ apt_get_update()
     if [ "$(find /var/lib/apt/lists/* | wc -l)" = "0" ]; then
         echo "Running apt-get update..."
         apt-get update -y
-    else
-        echo "Skipping apt-get update."
     fi
 }
 
@@ -211,7 +210,7 @@ else
     fi
 fi
 
-# Add sudo support for non-root user
+# Add add sudo support for non-root user
 if [ "${USERNAME}" != "root" ] && [ "${EXISTING_NON_ROOT_USER}" != "${USERNAME}" ]; then
     echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME
     chmod 0440 /etc/sudoers.d/$USERNAME
@@ -441,20 +440,24 @@ if [ ! -z "${CONTENTS_URL}" ]; then echo && echo "More info: ${CONTENTS_URL}"; f
 echo
 EOF
 )"
-if [ -f "${SCRIPT_DIR}/meta.env" ]; then
-    mkdir -p /usr/local/etc/vscode-dev-containers/
-    cp -f "${SCRIPT_DIR}/meta.env" /usr/local/etc/vscode-dev-containers/meta.env
+if [ -f "/usr/local/etc/vscode-dev-containers/meta.env" ]; then
     echo "${meta_info_script}" > /usr/local/bin/devcontainer-info
     chmod +x /usr/local/bin/devcontainer-info
 fi
 
+if [ ! -d "/usr/local/etc/vscode-dev-containers" ]; then
+    mkdir -p "$(dirname "${MARKER_FILE}")"
+fi
+
 # Write marker file
-mkdir -p "$(dirname "${MARKER_FILE}")"
 echo -e "\
     PACKAGES_ALREADY_INSTALLED=${PACKAGES_ALREADY_INSTALLED}\n\
     LOCALE_ALREADY_SET=${LOCALE_ALREADY_SET}\n\
     EXISTING_NON_ROOT_USER=${EXISTING_NON_ROOT_USER}\n\
     RC_SNIPPET_ALREADY_ADDED=${RC_SNIPPET_ALREADY_ADDED}\n\
     ZSH_ALREADY_INSTALLED=${ZSH_ALREADY_INSTALLED}" > "${MARKER_FILE}"
+
+# Clean up
+rm -rf /var/lib/apt/lists/*
 
 echo "Done!"

@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1.4
 
-ARG BASE=ubuntu-20.04
-ARG IDRIS2_TAG=v0.5.1
+ARG BASE=ubuntu-22.04
+ARG IDRIS2_TAG=v0.6.0
 FROM ghcr.io/xicesky/idris2-base:${BASE}
 ARG IDRIS2_TAG
 
