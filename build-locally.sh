@@ -10,11 +10,11 @@ IMAGE_NAME_PREFIX="${REGISTRY}/xicesky"
 
 set -x
 
-echo "Building ${IMAGE_NAME_PREFIX}/idris2-base:${BASE}" 1>&2
-docker build idris2-base \
-    --build-arg "BASE_IMAGE=${BASE_IMAGE}" \
-    -t "${IMAGE_NAME_PREFIX}/idris2-base:${BASE}" \
-    || exit $?
+# echo "Building ${IMAGE_NAME_PREFIX}/idris2-base:${BASE}" 1>&2
+# docker build idris2-base \
+#     --build-arg "BASE_IMAGE=${BASE_IMAGE}" \
+#     -t "${IMAGE_NAME_PREFIX}/idris2-base:${BASE}" \
+#     || exit $?
 
 echo "Building ${IMAGE_NAME_PREFIX}/idris2:${IDRIS2_TAG}-${BASE}" 1>&2
 docker build idris2 \

@@ -11,9 +11,11 @@ RUN git clone --depth 1 --branch "${IDRIS2_TAG}" "https://github.com/idris-lang/
 WORKDIR /usr/local/src/idris2
 
 ENV SCHEME=scheme
-RUN sed -i -E -e 's/^(PREFIX \?)=.*/\1=\/usr\/local/' config.mk
+RUN sed -i -E -e 's/^(PREFIX \?)=.*/\1=\/usr\/local\/idris2\/'"${IDRIS2_TAG}"'/' config.mk
 RUN make bootstrap
 RUN make install
+RUN ln -s /usr/local/idris2/$IDRIS2_TAG/bin/idris2 /etc/alternatives/idris2
+RUN ln -s /etc/alternatives/idris2 /usr/local/bin/idris2
 RUN make clean
 RUN make all
 RUN make install && make install-api
