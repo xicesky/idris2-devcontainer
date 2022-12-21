@@ -1,11 +1,8 @@
 # syntax = docker/dockerfile:1.4
 
 ARG BASE=ubuntu-22.04
-ARG IDRIS2_TAG=v0.6.0
-FROM ghcr.io/xicesky/idris2:${IDRIS2_TAG}-${BASE}
-
-# Prepare as devcontainer
-WORKDIR /home/vscode
+ARG PACKAGE_COLLECTION=nightly-221220
+FROM ghcr.io/xicesky/idris2:${PACKAGE_COLLECTION}-${BASE}
 
 ARG USERNAME=vscode
 ARG USER_UID=1000
@@ -13,6 +10,23 @@ ARG USER_GID=$USER_UID
 ARG UPGRADE_PACKAGES=true
 ARG INSTALL_OH_MYS=false
 ARG ADD_NON_FREE_PACKAGES=true
+
+# Prepare as devcontainer
+USER root
+WORKDIR /home/"${USERNAME}"
+
+# Unminimize
+RUN yes | unminimize
+
+# Install idris2-lsp
+USER "${USERNAME}"
+# - disable safety-prompt for this package
+RUN sed -i -E -e '/^\[install\]$/,/^\[/ s/^(safety-prompt\s*=\s*)(\w+)(.*)$/\1false\3/' "/home/"${USERNAME}"/.pack/user/pack.toml"
+# - install via pack
+RUN /home/"${USERNAME}"/.pack/bin/pack install-app lsp
+# - re-enable safety-prompt
+RUN sed -i -E -e '/^\[install\]$/,/^\[/ s/^(safety-prompt\s*=\s*)(\w+)(.*)$/\1true\3/' "/home/"${USERNAME}"/.pack/user/pack.toml"
+USER root
 
 COPY library-scripts/*.sh library-scripts/*.env /tmp/library-scripts/
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \

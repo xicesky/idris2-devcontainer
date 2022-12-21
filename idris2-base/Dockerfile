@@ -4,7 +4,8 @@ FROM ${BASE_IMAGE}
 
 # Build requirements & dev-tools
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get install --yes --no-install-recommends git build-essential chezscheme libgmp3-dev openjdk-11-jdk maven
+    && apt-get install --yes --no-install-recommends git build-essential chezscheme libgmp3-dev \
+    ca-certificates curl openssl rlwrap
 
 # Cleanup
 RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
