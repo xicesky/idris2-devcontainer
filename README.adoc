@@ -17,9 +17,9 @@ Containers for https://idris-lang.org/[idris2] development
 +
 [source,bash]
 ----
-docker run --rm -it ghcr.io/xicesky/idris2:nightly-221220-ubuntu-22.04 idris2
+docker run --rm -it ghcr.io/xicesky/idris2:nightly-230701-ubuntu-22.04 idris2
 # or
-docker run --rm -it ghcr.io/xicesky/idris2:nightly-221220-ubuntu-22.04 pack repl
+docker run --rm -it ghcr.io/xicesky/idris2:nightly-230701-ubuntu-22.04 pack repl
 ----
 * The devcontainer image can be used for your idris2 project, see for example my https://github.com/xicesky/idris2-stuff[idris2-stuff] repository.
     The `.devcontainer` directory contains the Dockerfile that uses this devcontainer and customizes it.
@@ -28,8 +28,8 @@ docker run --rm -it ghcr.io/xicesky/idris2:nightly-221220-ubuntu-22.04 pack repl
 
 * `ghcr.io/xicesky/idris2-base:ubuntu-22.04`
     ** Base container for building idris2
-* `ghcr.io/xicesky/idris2:nightly-221220-ubuntu-22.04`
+* `ghcr.io/xicesky/idris2:nightly-230701-ubuntu-22.04`
     ** Container with installed idris2 & https://github.com/stefan-hoeck/idris2-pack[pack]
-* `ghcr.io/xicesky/idris2-devcontainer:nightly-221220-ubuntu-22.04`
+* `ghcr.io/xicesky/idris2-devcontainer:nightly-230701-ubuntu-22.04`
     ** https://code.visualstudio.com/docs/remote/containers#_quick-start-try-a-development-container[Visual Studio Code Development Container] for idris2 development
     ** Includes https://github.com/idris-community/idris2-lsp[idris2-lsp]

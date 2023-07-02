@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1.4
 
 ARG BASE=ubuntu-22.04
-ARG PACKAGE_COLLECTION=nightly-221220
+ARG PACKAGE_COLLECTION=nightly-230701
 FROM ghcr.io/xicesky/idris2:${PACKAGE_COLLECTION}-${BASE}
 
 ARG USERNAME=vscode
