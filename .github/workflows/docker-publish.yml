@@ -1,3 +1,4 @@
+---
 name: Docker
 
 # This workflow uses actions that are not certified by GitHub.
@@ -21,15 +22,15 @@ on:
         description: 'Idris2 version (tag), e.g.: v0.6.0'
         required: true
         type: string
-        default: 'v0.6.0'
+        default: v0.6.0
 
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   UBUNTU_VERSION: ${{ inputs.UBUNTU_VERSION }}
   IDRIS2_TAG: ${{ inputs.IDRIS2_TAG }}
-  BASE_IMAGE: 'ubuntu:${{ inputs.UBUNTU_VERSION }}'
-  BASE: 'ubuntu-${{ inputs.UBUNTU_VERSION }}'
+  BASE_IMAGE: ubuntu:${{ inputs.UBUNTU_VERSION }}
+  BASE: ubuntu-${{ inputs.UBUNTU_VERSION }}
   # github.repository_owner = The repository owner's name
   IMAGE_NAME_PREFIX: ${{ github.repository_owner }}
 

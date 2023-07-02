@@ -8,6 +8,8 @@
 .project
 .classpath
 .settings
+/.vscode/**
+!/.vscode/launch.json
 
 # Ignore _local directory
 _local
@@ -15,4 +17,3 @@ _local
 # Ignore build directories
 build
 target
-
